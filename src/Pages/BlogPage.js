@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate} from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import {newBaseUrl } from '../baseUrl';
@@ -14,7 +14,7 @@ const BlogPage = () => {
     const navigation = useNavigate();
     const { setLoading, loading } = useContext(AppContext);
     const blogId = location.pathname.split("/").at(-1);
-    async function fectchRelatedBlogs() {
+    const fectchRelatedBlogs=useCallback(async () => {
         setLoading(true);
         let url = `${newBaseUrl}get-blog?blogId=${blogId}`;
         try {
@@ -30,13 +30,13 @@ const BlogPage = () => {
             setRelatedBlogs([]);
         }
         setLoading(false);
-    }
+    }) 
 
     useEffect(() => {
         if (blogId) {
             fectchRelatedBlogs();
         }
-    }, [location.pathname,blogId]) 
+    }, [location.pathname,blogId,fectchRelatedBlogs]) 
     
   return (
     <div>
