@@ -36,7 +36,7 @@ const BlogPage = () => {
         if (blogId) {
             fectchRelatedBlogs();
         }
-    }, [location.pathname,blogId,fectchRelatedBlogs]) 
+    }, [location.pathname,blogId]) 
     
   return (
     <div>
