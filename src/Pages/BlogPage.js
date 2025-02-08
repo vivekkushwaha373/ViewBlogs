@@ -14,29 +14,30 @@ const BlogPage = () => {
     const navigation = useNavigate();
     const { setLoading, loading } = useContext(AppContext);
     const blogId = location.pathname.split("/").at(-1);
-    const fectchRelatedBlogs=useCallback(async () => {
+   
+    const fetchRelatedBlogs = useCallback(async () => {
+        if (!blogId) return;
         setLoading(true);
         let url = `${newBaseUrl}get-blog?blogId=${blogId}`;
+
         try {
             const res = await fetch(url);
             const data = await res.json();
-
             setBlog(data.blog);
             setRelatedBlogs(data.relatedBlogs);
-        }
-        catch (error) {
-            console.log("Error aagya in  blog id wali call");
+        } catch (error) {
+            console.log("Error in fetching blog data:", error);
             setBlog(null);
             setRelatedBlogs([]);
         }
         setLoading(false);
-    }) 
+    }, [blogId, setLoading]); 
 
     useEffect(() => {
         if (blogId) {
-            fectchRelatedBlogs();
+            fetchRelatedBlogs();
         }
-    }, [location.pathname,blogId,fectchRelatedBlogs]) 
+    }, [location.pathname, blogId, fetchRelatedBlogs]) 
     
   return (
     <div>
