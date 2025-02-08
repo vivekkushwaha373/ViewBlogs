@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate} from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
-import { baseUrl, newBaseUrl } from '../baseUrl';
+import {newBaseUrl } from '../baseUrl';
 import Header from '../components/Header';
 import BlogDetails from '../components/BlogDetails';
 
@@ -36,7 +36,7 @@ const BlogPage = () => {
         if (blogId) {
             fectchRelatedBlogs();
         }
-    }, [location.pathname]) 
+    }, [location.pathname,blogId,fectchRelatedBlogs]) 
     
   return (
     <div>
@@ -56,7 +56,7 @@ const BlogPage = () => {
                           <h2>Related Blogs</h2>
                           {
                               relatedblogs.map((post) => {
-                                  <div>
+                                 return <div>
                                     <BlogDetails post={post}></BlogDetails>
                                 </div>
                             })   
